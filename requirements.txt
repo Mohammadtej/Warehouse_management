@@ -1,3 +1,3 @@
 Django
-pymongo[snappy,gssapi,srv,tls]
+pymongo
 django-environ
