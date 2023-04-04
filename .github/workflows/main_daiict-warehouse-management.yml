@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'daiict-warehouse-management'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A3017968BC244C09BF73F9B20BAA4A3F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EFA706BC3DBF46B68521EE750AEDB429 }}
