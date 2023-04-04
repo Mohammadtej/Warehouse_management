@@ -1,0 +1,30 @@
+{% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<h1> Enter details about  Warehouse</h1>
+
+{% block content %}
+    <form action="{% url 'warehouse:registerEntry'%}" method="post">
+    {% csrf_token %}
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="latitude">Latitude:</label><br>
+        <input type="number" id="latitude" name="latitude"><br><br>
+        <label for="longitude">Longitude:</label><br>
+        <input type="number" id="longitude" name="longitude"><br><br>
+        <label for="storage_capacity">Storage capacity:</label><br>
+        <input type="number" id="storage_capacity" name="storage_capacity"><br><br>
+        <label for="phoneNum">Mobile Number:</label><br>
+        <input type="text" id="phoneNum" name="phoneNum"><br><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="text" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+    </form> 
+{% endblock %}

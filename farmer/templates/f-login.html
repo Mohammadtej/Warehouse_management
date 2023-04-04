@@ -1,0 +1,30 @@
+{% extends 'f-base-generic.html' %}
+
+{% block content %}
+
+
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <form action="{% url 'farmer:loginValidate'%}" method="post">
+    {% csrf_token %}
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="text" id="password" name="password"><br><br>
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form> 
+    <button id="register-btn">Register</button>
+    <script>
+        document.getElementById("register-btn").addEventListener("click", function() {
+            window.location.href = "{% url 'farmer:register' %}";
+        });
+    </script>
+{% endblock %}
+
