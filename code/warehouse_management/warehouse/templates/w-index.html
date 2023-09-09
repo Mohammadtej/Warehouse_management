@@ -1,0 +1,71 @@
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- Style link -->
+		<link rel="stylesheet" href="{% static 'styles/w-home.css' %}" />
+
+		<title>Warehouse</title>
+	</head>
+
+	<body>
+		<header>
+			<div class="banner">
+				<div class="navbar">
+					<img class="logo-img" src = "{% static './Images/WarehouseWisepng.png' %}" />
+					<ul>
+						<li><a href="{% url 'home:home' %}">Back</a></li>
+						<li><a href="{% url 'warehouse:contact' %}">Contacts</a></li>
+						<li><a href="{% url 'warehouse:aboutus' %}">About Us</a></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<div class="main--login--panel">
+			<div class="image--container">
+				<img
+					class="heading--style--image"
+					src="{% static './Images/Exclude.svg' %}"
+					alt="Just a vector image covering the heading"
+				/>
+				<h1 class="heading">
+					<span>Warehouse</span><span> Management</span>
+					<span> System </span>
+				</h1>
+			</div>
+			<div class="center">
+				<li>
+					<a href="{% url 'warehouse:login' %}" class="btn1">Login</a>
+				</li>
+				<div class="hr"></div>
+				<li>
+					<a
+						href="{% url 'warehouse:register' %}"
+						class="btn1 sign-up-btn"
+						>Sign Up</a
+					>
+				</li>
+			</div>
+		</div>
+	</body>
+</html>

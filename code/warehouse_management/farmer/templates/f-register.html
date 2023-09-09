@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="UTF-8" />
+		<title> Registration Form | Warehouse manegment</title>
+
+		<!-- Font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+
+			<link rel="stylesheet" href="{% static 'styles/famer_register.css' %}">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<script src="https://kit.fontawesome.com/cd6d96a6c5.js" crossorigin="anonymous"></script>
+		<script defer src="{% static 'script/f-register.js' %}"></script>
+	</head>
+	<body>
+		    {% if messages %}
+        <div class="warning--message">
+			<div class="alert alert-error">
+  				<div class="icon__wrapper">
+    					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path></svg>
+  				</div>
+  				
+  					<ul class="messages">
+						{% for message in messages %}
+						<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+						{% endfor %}
+					</ul>
+                    <span class="mdi mdi-open-in-new open"></span>
+                    <span class="mdi mdi-close close"></span>
+                </div>
+            </div>
+            {% endif %}
+		<div class="container">
+			<div>
+				<img src="{% static 'Images/register_page_Background.svg' %}">
+			</div>
+			<div class="registration--form--block">
+				<div class="navbar">
+					<img class="logo-img" src = "{% static './Images/WarehouseWise.png' %}" />
+						<div class="home--logIn">
+                        	<a class="to-home" href="{% url 'farmer:index' %}">Home</a>
+					    	<p>Already Have an Account ? <a class="LogIn--option" href="{% url 'farmer:login'%}">LogIn</a></p>
+                    </div>
+				</div>
+				<div class="registration--form">
+					<div class="title"><span>Farmer's</span> Registration</div>
+					<form action="{% url 'farmer:registerEntry'%}" method="post">
+					{% csrf_token %}
+						<div class="user-details">
+							<div class="input-box">
+								<span class="details">First Name</span>
+								<input
+                                class="text--input-box"
+									type="text"
+									name="firstName"
+									placeholder="Enter your first name"
+									required
+								/>
+							</div>
+							<div class="input-box">
+								<span class="details">Last Name</span>
+								<input
+                                class="text--input-box"
+									type="text"
+									name="lastName"
+									placeholder="Enter your last name"
+									required
+								/>
+							</div>
+
+							<div class="input-box">
+								<span class="details">Email</span>
+								<input
+                                class="text--input-box"
+									type="text"
+									name="email"
+									placeholder="Enter your email"
+									required
+								/>
+							</div>
+
+							<div class="input-box">
+								<span class="details">Phone number</span>
+								<input
+                                					class="text--input-box"
+									id="phoneNo"
+									type="text"
+									name="phoneNum"
+									placeholder="Enter your number"
+									min="7"
+									max="10"
+									required
+								/>
+							</div>
+
+							<div class="input-box">
+								<div class="password-input--box">
+									<span class="details">Password</span>
+									<input class="text--input-box" type="password" id="password" name="password"
+									placeholder="Enter your Password" required />
+									<i class="fa-solid fa-eye"></i>
+								</div>
+							</div>
+														<div class="input-box">
+								<div class="content">
+									<p>Password must contain:</p>
+									<ul class="requirement-list">
+										<li>
+											<i class="fa-solid fa-circle"></i>
+											<span>At least 8 to 12 characters length</span>
+										</li>
+										<li>
+											<i class="fa-solid fa-circle"></i>
+											<span>At least 1 number (0...9)</span>
+										</li>
+										<li>
+											<i class="fa-solid fa-circle"></i>
+											<span>At least 1 lowercase letter (a...z)</span>
+										</li>
+										<li>
+											<i class="fa-solid fa-circle"></i>
+											<span>At least 1 special symbol (!...$)</span>
+										</li>
+										<li>
+											<i class="fa-solid fa-circle"></i>
+											<span>At least 1 uppercase letter (A...Z)</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						<div class="submit--button">
+							<input type="submit" value="Register" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

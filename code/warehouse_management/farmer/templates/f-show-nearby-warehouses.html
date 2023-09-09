@@ -1,0 +1,249 @@
+{% comment %} {% extends 'f-base-generic.html' %}
+
+{% block content %}
+    <div>
+        Warehouses in {{ distance }} km radius are:
+        <br><br>
+        {% for warehouse in warehouse_list %}
+            <div>
+                Name: {{ warehouse.name }} <br>
+                Email: {{ warehouse.email }} <br>
+                Phone Number: {{ warehouse.phone_number }} <br>
+                Storage Capacity: {{ warehouse.storage_capacity }} <br>
+                Distance: {{ warehouse.distance }} km <br>
+            </div>
+            <br><br><hr>
+        {% endfor %}
+    </div>
+{% endblock %} {% endcomment %}
+
+{% comment %} {% extends 'f-base-generic.html' %}
+
+{% block content %}
+
+
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <form action="{% url 'farmer:showNearbyWarehouses'%}" method="post">
+    {% csrf_token %}
+        <label for="latitude">Latitude:</label><br>
+        <input type="text" id="latitude" name="latitude"><br><br>
+        <label for="longitude">Longitude:</label><br>
+        <input type="text" id="longitude" name="longitude"><br><br>
+        <label for="distance">Distance:</label><br>
+        <input type="text" id="distance" name="distance"><br><br>
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form> 
+{% endblock %} {% endcomment %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="shortcut icon" type="image/png" href="/icon.png" />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- Leaflet library -->
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+			integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+			crossorigin=""
+		/>
+		<script
+			src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+			integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+			crossorigin=""
+		></script>
+		<!-- / Leaflet library -->
+
+		<!-- Material Icons -->
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+		/>
+
+		<link rel="stylesheet" href="{% static 'styles/f-showNearby.css' %}" />
+
+
+		<title>Show nearby Warehouse</title>
+	</head>
+	<body>
+		<div class="container">
+				{% if messages %}
+					<div class="warning--message">
+						<div class="alert alert-error">
+							<div class="icon__wrapper">
+								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path></svg>
+							</div>
+							
+								<ul class="messages">
+									{% for message in messages %}
+									<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+									{% endfor %}
+								</ul>
+								<span class="mdi mdi-open-in-new open"></span>
+								<span class="mdi mdi-close close"></span>
+						</div>
+					</div>
+			{% endif %}
+            <aside>
+				<div class="top">
+					<div class="logo">
+						<img src="{% static 'Images/WarehouseWise.png' %}" />
+					</div>
+				</div>
+				<div class="sidebar">
+					<a href="{% url 'farmer:home' %}">
+						<svg
+							fill="#000000"
+							class="navbar--menu-icon"
+							viewBox="0 0 32 32"
+							version="1.1"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M31.772 16.043l-15.012-15.724c-0.189-0.197-0.449-0.307-0.721-0.307s-0.533 0.111-0.722 0.307l-15.089 15.724c-0.383 0.398-0.369 1.031 0.029 1.414 0.399 0.382 1.031 0.371 1.414-0.029l1.344-1.401v14.963c0 0.552 0.448 1 1 1h6.986c0.551 0 0.998-0.445 1-0.997l0.031-9.989h7.969v9.986c0 0.552 0.448 1 1 1h6.983c0.552 0 1-0.448 1-1v-14.968l1.343 1.407c0.197 0.204 0.459 0.308 0.722 0.308 0.249 0 0.499-0.092 0.692-0.279 0.398-0.382 0.411-1.015 0.029-1.413zM26.985 14.213v15.776h-4.983v-9.986c0-0.552-0.448-1-1-1h-9.965c-0.551 0-0.998 0.445-1 0.997l-0.031 9.989h-4.989v-15.777c0-0.082-0.013-0.162-0.032-0.239l11.055-11.52 10.982 11.507c-0.021 0.081-0.036 0.165-0.036 0.252z"
+							></path>
+						</svg>
+						<h3>Home</h3>
+					</a>
+
+					<a href="{% url 'farmer:makeReservation' %}">
+						<svg xmlns="http://www.w3.org/2000/svg" class="navbar--menu-icon" fill="#363949" viewBox="0 0 256 256"><path d="M32,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H40A8,8,0,0,1,32,64Zm8,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16Zm104,48H40a8,8,0,0,0,0,16H144a8,8,0,0,0,0-16Zm88,0H216V168a8,8,0,0,0-16,0v16H184a8,8,0,0,0,0,16h16v16a8,8,0,0,0,16,0V200h16a8,8,0,0,0,0-16Z"></path></svg>
+						<h3>Add Reservation</h3>
+					</a>
+					<a href="{% url 'farmer:showReservations' %}">
+						<img
+							src="{% static 'Images/Navbar/report-text-svgrepo-com.svg' %}"
+							alt=""
+							class="navbar--menu-icon"
+						/>
+						<h3>Show Reservations</h3>
+					</a>
+					<a href="{% url 'farmer:generateReport' %}">
+						<img
+							src="{% static 'Images/Navbar/file-arrow-down.svg' %}"
+							alt=""
+							class="navbar--menu-icon"
+						/>
+						<h3>Generate Report</h3>
+					</a>
+					<a href="{% url 'farmer:searchNearbyWarehouses' %}" class="active">
+						<img
+							src="{% static 'Images/Navbar/warehouse-svgrepo-com.svg' %}"
+							alt=""
+							class="navbar--menu-icon"
+						/>
+						<h3>Nearby warehouses</h3>
+					</a>
+					<a href="{% url 'farmer:showCropSuggestions' %}">
+						<img
+							src="{% static 'Images/Navbar/cropSuggest.svg' %}"
+							alt=""
+							class="navbar--menu-icon"
+						/>
+						<h3>Crop Suggestions</h3>
+					</a>
+					<a href="{% url 'farmer:videoCall' %}">
+						<img
+							src="{% static 'Images/Navbar/video-camera.svg' %}"
+							alt=""
+							class="navbar--menu-icon"
+						/>
+						<h3>Video Call</h3>
+					</a>
+
+					<a href="{% url 'farmer:logout' %}">
+						<svg class="navbar--menu-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M15 16.5V19C15 20.1046 14.1046 21 13 21H6C4.89543 21 4 20.1046 4 19V5C4 3.89543 4.89543 3 6 3H13C14.1046 3 15 3.89543 15 5V8.0625M11 12H21M21 12L18.5 9.5M21 12L18.5 14.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<h3>Logout</h3>
+					</a>
+				</div>
+			</aside>
+
+			<main>
+				<div class="heading--container">
+					<h1 class="heading">Showing Nearby Warehouse's</h1>
+				</div>
+
+				<div class="map--container">
+					<div class="warehouse--locations--div">
+						<h4 class="area--location">
+							Results for
+							<strong class="area--location-text"></strong>
+							:
+						</h4>
+						<div class="Warehouse--locations">
+							{% comment %} For loop here0 {% endcomment %}
+							{% for warehouse in warehouse_list %}
+							<div class="warehouse-location">
+								<h4 class="warehouse--name">{{warehouse.name}}</h4>
+								<div class="details-div">
+									<div class="distance-div display-flex">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="red"
+										class="details--svg">
+										<path
+											d="M229.33,98.21,53.41,33l-.16-.05A16,16,0,0,0,32.9,53.25a1,1,0,0,0,.05.16L98.21,229.33A15.77,15.77,0,0,0,113.28,240h.3a15.77,15.77,0,0,0,15-11.29l23.56-76.56,76.56-23.56a16,16,0,0,0,.62-30.38ZM224,113.3l-76.56,23.56a16,16,0,0,0-10.58,10.58L113.3,224h0l-.06-.17L48,48l175.82,65.22.16.06Z">
+										</path>
+										</svg>
+										<p class="details--div--heading">distance:</p>
+										<p class="deatils--info">{{warehouse.distance}} km</p>
+									</div>
+									<div class="distance-div display-flex">
+										<svg xmlns="http://www.w3.org/2000/svg"
+										fill="red" viewBox="0 0 256 256" class="details--svg"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"></path></svg>
+										<p class="details--div--heading">phone no. :</p>
+										<p class="deatils--info">{{warehouse.phone_number}}</p>
+									</div>
+
+									<div class="distance-div display-flex">
+										<svg xmlns="http://www.w3.org/2000/svg"  fill="red" viewBox="0 0 256 256" class="details--svg"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"></path></svg>
+										<p class="details--div--heading">Email :</p>
+										<p class="deatils--info">{{warehouse.email}}</p>
+									</div>
+									
+									<div class="capacity-div display-flex">
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+										stroke-width="1.5" class="red-stroke details--svg">
+										<path stroke-linecap="round" stroke-linejoin="round"
+											d="M7.875 14.25l1.214 1.942a2.25 2.25 0 001.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 011.872 1.002l.164.246a2.25 2.25 0 001.872 1.002h2.092a2.25 2.25 0 001.872-1.002l.164-.246A2.25 2.25 0 0116.954 9h4.636M2.41 9a2.25 2.25 0 00-.16.832V12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 01.382-.632l3.285-3.832a2.25 2.25 0 011.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0021.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 002.25 2.25z" />
+										</svg>
+                                        <p class="details--div--heading">capacity:</p>
+                                        <ion-icon name="file-tray-stacked-outline"></ion-icon>
+                                        <p class="deatils--info">{{warehouse.storage_capacity}} sq. ft</p>
+                                    </div>
+								</div>
+								</div>
+								<hr class="line-break" />
+
+								{% endfor %}
+                        </div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</body>
+</html>

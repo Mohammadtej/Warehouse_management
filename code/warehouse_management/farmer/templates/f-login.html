@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Style link -->
+    <link rel="stylesheet" href="{% static 'styles/farmer-login.css' %}" />
+
+    <title>Login Form</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="Logo">
+            <img class="logo-img" src = "{% static './Images/WarehouseWise.png' %}" />
+        </div>
+            <ul class="nav--items">
+                <li><a class="nav--item black--text" href="{% url 'farmer:index' %}">Home</a></li>
+                <li><a class="nav--item" href="{% url 'farmer:contact' %}">Contacts</a></li>
+                <li><a class="nav--item" href="{% url 'farmer:aboutus' %}">About Us</a></li>
+            </ul>
+
+    </nav>
+    {% if messages %}
+        <div class="warning--message">
+			<div class="alert alert-error">
+  				<div class="icon__wrapper">
+    					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path></svg>
+  				</div>
+  				
+  					<ul class="messages">
+						{% for message in messages %}
+						<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+						{% endfor %}
+					</ul>
+                    <span class="mdi mdi-open-in-new open"></span>
+                    <span class="mdi mdi-close close"></span>
+                </div>
+            </div>
+            {% endif %}
+            <div class="container">
+        <form action="{% url 'farmer:loginValidate'%}" class="form" method="post">
+        {% csrf_token %}
+            <h2 class="heading"><span>Farmer</span> Login</h2>
+            <div class="input--container">
+                <h5 class="input--label">Email</h5>
+                <input type="email" name="email" class="box" >
+            </div>
+            <div class="input--container">
+                 <h5 class="input--label">Password</h5>
+                <input type="password" name="password" class="box" >
+            </div>
+            <input type="submit" value="Log In" id="submit">
+            <div class="sign--up-prompt">
+                <p>Don't Have An Account ?</p>
+                <a href="{% url 'farmer:register' %}">Sign up</a>
+            </div>
+        </form>
+        <div class="side"></div>
+        </div>
+</body>
+
+
+</html>

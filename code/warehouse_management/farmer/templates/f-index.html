@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- Style link -->
+		<link rel="stylesheet" href="{% static 'styles/f-home.css' %}" />
+		<title>Warehouse</title>
+	</head>
+
+	<body>
+			{% if messages %}
+				<div class="warning--message">
+					<div class="alert alert-error">
+						<div class="icon__wrapper">
+							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path></svg>
+						</div>
+						
+							<ul class="messages">
+								{% for message in messages %}
+								<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+								{% endfor %}
+							</ul>
+							<span class="mdi mdi-open-in-new open"></span>
+							<span class="mdi mdi-close close"></span>
+					</div>
+				</div>
+		{% endif %}
+		<header>
+			<div class="banner">
+				<div class="navbar">
+					<img
+						class="logo-img"
+						src="{% static './Images/WarehouseWisepng.png' %}"
+					/>
+					<ul>
+						<li>
+							<a
+								class="nav--item black--text"
+								href="{% url 'home:home' %}"
+								>Back</a
+							>
+						</li>
+						<li>
+							<a
+								class="nav--item"
+								href="{% url 'farmer:contact' %}"
+								>Contacts</a
+							>
+						</li>
+						<li>
+							<a
+								class="nav--item"
+								href="{% url 'farmer:aboutus' %}"
+								>About US</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+
+		<div class="main--login--panel">
+			<div class="image--container">
+				<img
+					class="heading--style--image"
+					src="{% static './Images/Exclude.svg' %}"
+					alt="Just a vector image covering the heading"
+				/>
+				<h1 class="heading">
+					<span>Warehouse</span><span> Management</span>
+					<span> System </span>
+				</h1>
+			</div>
+			<div class="center">
+				<li>
+					<a href="{% url 'farmer:login' %}" class="btn1">Login</a>
+				</li>
+				<div class="hr"></div>
+				<li>
+					<a
+						href="{% url 'farmer:register' %}"
+						class="btn1 sign-up-btn"
+						>Sign Up</a
+					>
+				</li>
+			</div>
+		</div>
+	</body>
+</html>

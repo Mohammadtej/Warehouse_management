@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+		<meta charset="UTF-8" />
+		<title>Contact Us</title>
+		<link rel="stylesheet" href="{% static 'styles/aboutUS.css' %}" />
+        <link rel="stylesheet" href="{% static 'styles/contact.css' %}" />
+</head>
+
+<body>   
+    <div class="container">
+        <h1>Connect With Us!</h1>
+        <p>We would love to respond to your queries.<br>Feel free to get in touch with us.</p>
+        <div class="contact-box">
+            <div class="contact-left">
+                <h3>Send your request</h3>
+                <form action="{% url 'home:sendQuery' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Name</label>
+                            <input id="name" name="name" type="text" placeholder="Your Name">                 
+                          
+                            <label>Phone No.</label>
+                            <input id="phoneNum" name="phoneNum" type="text" placeholder="Your phone number">          
+                        </div>
+                        <div class="input-group">    
+                            <label>Email</label>
+                            <input id="email" name="email" type="email" placeholder="Your email">        
+                         
+                            <label>Title</label>
+                            <input id="title" name="query" type="text" placeholder="Your query">           
+                        </div>
+                    </div>
+                    <label>Description</label>
+                    <textarea name="query" id="query" cols="30" rows="5" placeholder="Describe the query"></textarea>
+                    
+                    <button type="submit">Submit Query</button>
+                    
+                </form>
+            </div>
+            <div class="contact-right">
+                <h3>Reach Us</h3>
+                <table>
+                    <tr>
+                        <td>Email:</td>
+                        <td>daiict.warehouses@gmail.com</td>   
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td>+91 985671 12655</td>   
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td> DA-IICT,<br>Reliance Cross Rd,<br>Gandhinagar, Gujarat - 382007</td>   
+                    </tr>
+                </table>
+            </div>
+        </div>
+	</div>
+</body>
+</html>
